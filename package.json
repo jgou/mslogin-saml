@@ -1,0 +1,14 @@
+{
+    "name": "mslogin-saml",
+    "version": "1.0.0",
+    "description": "Return SAML token as a result of login in a web application with your MS credentials",
+    "main": "src/main.js",
+    "engines": {
+        "node": ">= 6.0.0",
+        "npm": ">= 3.0.0"
+    },
+    "devDependencies": {
+        "jsdom": "^16.2.2",
+        "puppeteer": "^3.3.0"
+    }
+}
