@@ -15,7 +15,7 @@ if (process.env.MS_WEBAPP === undefined) webapp = config.MS_WEBAPP;
 console.log('\x1b[36m', "Using " + username + " credentials...", '\x1b[0m');
 
 (async() => {
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({ headless: false })
     const page = await browser.newPage()
 
     await page.setViewport({ width: 1280, height: 800 })
@@ -23,6 +23,7 @@ console.log('\x1b[36m', "Using " + username + " credentials...", '\x1b[0m');
 
     const navigationPromise = page.waitForNavigation({waitUntil: ['networkidle2'] })
 
+    await page.waitFor(5000);
     await page.waitForSelector('[name="loginfmt"]')
     await page.type('[name="loginfmt"]', username)
     await page.click('[type="submit"]')
@@ -32,7 +33,8 @@ console.log('\x1b[36m', "Using " + username + " credentials...", '\x1b[0m');
 
     await page.waitForSelector('input[type="password"]', { visible: true });
     await page.type('input[type="password"]', password);
-    await page.keyboard.press("Enter");
+    await page.click('[type="submit"]')
+    //    await page.keyboard.press("Enter");
 
     await navigationPromise
     await page.waitForResponse(response => response.url().startsWith('https://login.microsoftonline.com'));
@@ -50,7 +52,7 @@ console.log('\x1b[36m', "Using " + username + " credentials...", '\x1b[0m');
         })
     })
 
-    await page.waitFor(10000);
+    await page.waitFor(20000);
     await browser.close()
 
     console.log('\x1b[36m', "SAML RESPONSE", '\x1b[0m');
